@@ -7,6 +7,8 @@ import Navigation from '@/components/Navigation';
 import MemberForm from '@/components/MemberForm';
 import ItemForm from '@/components/ItemForm';
 import SplitResult from '@/components/SplitResult';
+import Swal from 'sweetalert2'
+
 
 export default function EventDetailPage() {
   const params = useParams();
@@ -64,7 +66,7 @@ export default function EventDetailPage() {
 
   const deleteMember = async (memberId) => {
     // Cek apakah member sudah digunakan di items
-    const isUsed = event.items.some(item => 
+    const isUsed = event.items.some(item =>
       item.payerId === memberId || item.participants.includes(memberId)
     );
 
@@ -171,7 +173,7 @@ export default function EventDetailPage() {
       items: event.items,
       splitData: splitData
     };
-    
+
     const encodedData = encodeURIComponent(btoa(JSON.stringify(shareData)));
     const shareUrl = `${window.location.origin}/share/${encodedData}`;
 
@@ -208,7 +210,7 @@ export default function EventDetailPage() {
   return (
     <div className="min-h-screen bg-slate-900">
       <Navigation />
-      
+
       <div className="container mx-auto p-4 max-w-md">
         {/* Header */}
         <div className="mb-6">
@@ -228,31 +230,28 @@ export default function EventDetailPage() {
         <div className="flex bg-slate-800 rounded-lg p-1 mb-6">
           <button
             onClick={() => setActiveTab('members')}
-            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${
-              activeTab === 'members'
+            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${activeTab === 'members'
                 ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
-            }`}
+              }`}
           >
             Anggota ({event.members.length})
           </button>
           <button
             onClick={() => setActiveTab('items')}
-            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${
-              activeTab === 'items'
+            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${activeTab === 'items'
                 ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
-            }`}
+              }`}
           >
             Items ({event.items.length})
           </button>
           <button
             onClick={() => setActiveTab('result')}
-            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${
-              activeTab === 'result'
+            className={`flex-1 py-2 px-4 rounded text-sm font-medium transition-colors ${activeTab === 'result'
                 ? 'bg-blue-600 text-white'
                 : 'text-slate-300 hover:text-white'
-            }`}
+              }`}
           >
             Hasil
           </button>
@@ -261,7 +260,7 @@ export default function EventDetailPage() {
         {/* Tab Content */}
         {activeTab === 'members' && (
           <div>
-            <MemberForm 
+            <MemberForm
               onAddMember={addMember}
               members={event.members}
               onDeleteMember={deleteMember}
