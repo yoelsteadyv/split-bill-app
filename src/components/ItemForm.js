@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { formatRupiah, formatInputNumber, parseFormattedNumber, formatDate } from '@/utils/formatters';
+import Swal from 'sweetalert2'
+
 
 export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
   const [itemName, setItemName] = useState('');
@@ -15,7 +17,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
   };
 
   const handleParticipantToggle = (memberId) => {
-    setParticipants(prev => 
+    setParticipants(prev =>
       prev.includes(memberId)
         ? prev.filter(id => id !== memberId)
         : [...prev, memberId]
@@ -32,7 +34,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validasi
     if (!itemName.trim()) {
       Swal.fire({
@@ -90,13 +92,13 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
       };
 
       onAddItem(itemData);
-      
+
       // Reset form
       setItemName('');
       setAmount('');
       setPayerId('');
       setParticipants([]);
-      
+
       Swal.fire({
         title: 'Berhasil!',
         text: `Item "${itemName}" berhasil ditambahkan!`,
@@ -133,7 +135,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
       {/* Form Tambah Item */}
       <div className="card mb-6">
         <h2 className="text-xl font-semibold mb-4">Tambah Item Pengeluaran</h2>
-        
+
         <form onSubmit={handleSubmit}>
           {/* Nama Item */}
           <div className="mb-4">
@@ -196,7 +198,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
             <label className="block text-sm font-medium mb-2">
               Peserta yang ikut bayar * ({participants.length}/{members.length})
             </label>
-            
+
             <div className="flex space-x-2 mb-3">
               <button
                 type="button"
@@ -270,7 +272,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
                       Hapus
                     </button>
                   </div>
-                  
+
                   <div className="space-y-1 text-sm">
                     <p className="text-blue-400 font-medium">
                       {formatRupiah(item.amount)}

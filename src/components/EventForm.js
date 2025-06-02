@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { saveEvent } from '@/utils/localStorage';
+import Swal from 'sweetalert2'
+
 
 export default function EventForm({ onEventCreated, initialData = null }) {
   const [eventName, setEventName] = useState(initialData?.name || '');
@@ -8,7 +10,7 @@ export default function EventForm({ onEventCreated, initialData = null }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validasi
     if (!eventName.trim()) {
       Swal.fire({
@@ -65,7 +67,7 @@ export default function EventForm({ onEventCreated, initialData = null }) {
       <h2 className="text-xl font-semibold mb-4">
         {initialData ? 'Edit Event' : 'Buat Event Baru'}
       </h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">

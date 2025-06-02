@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { formatDate } from '@/utils/formatters';
+import Swal from 'sweetalert2'
+
 
 export default function MemberForm({ onAddMember, members, onDeleteMember }) {
   const [memberName, setMemberName] = useState('');
@@ -8,7 +10,7 @@ export default function MemberForm({ onAddMember, members, onDeleteMember }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validasi
     if (!memberName.trim()) {
       Swal.fire({
@@ -49,7 +51,7 @@ export default function MemberForm({ onAddMember, members, onDeleteMember }) {
     try {
       onAddMember({ name: memberName.trim() });
       setMemberName('');
-      
+
       Swal.fire({
         title: 'Berhasil!',
         text: `Anggota "${memberName}" berhasil ditambahkan!`,
@@ -77,7 +79,7 @@ export default function MemberForm({ onAddMember, members, onDeleteMember }) {
       {/* Form Tambah Anggota */}
       <div className="card mb-6">
         <h2 className="text-xl font-semibold mb-4">Tambah Anggota</h2>
-        
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">
@@ -133,7 +135,7 @@ export default function MemberForm({ onAddMember, members, onDeleteMember }) {
                     Ditambahkan: {formatDate(member.createdAt)}
                   </p>
                 </div>
-                
+
                 <button
                   onClick={() => onDeleteMember(member.id)}
                   className="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded hover:bg-red-600/20 transition-colors"

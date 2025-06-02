@@ -1,13 +1,15 @@
 'use client';
 import { formatRupiah } from '@/utils/formatters';
+import Swal from 'sweetalert2'
+
 
 export default function SplitResult({ event, splitData, onShare }) {
-  
+
   const exportToPDF = async () => {
     // Import jsPDF dan html2canvas
     const { jsPDF } = await import('jspdf');
     const html2canvas = await import('html2canvas');
-    
+
     try {
       // Buat elemen untuk PDF
       const element = document.createElement('div');
@@ -16,7 +18,7 @@ export default function SplitResult({ event, splitData, onShare }) {
       element.style.color = 'black';
       element.style.fontFamily = 'Arial, sans-serif';
       element.style.width = '800px';
-      
+
       element.innerHTML = `
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #1e40af; margin: 0;">${event.name}</h1>
@@ -51,11 +53,11 @@ export default function SplitResult({ event, splitData, onShare }) {
             </thead>
             <tbody>
               ${event.items.map(item => {
-                const payer = event.members.find(m => m.id === item.payerId);
-                const participants = item.participants
-                  .map(pid => event.members.find(m => m.id === pid)?.name)
-                  .filter(Boolean);
-                return `
+        const payer = event.members.find(m => m.id === item.payerId);
+        const participants = item.participants
+          .map(pid => event.members.find(m => m.id === pid)?.name)
+          .filter(Boolean);
+        return `
                   <tr>
                     <td style="border: 1px solid #d1d5db; padding: 8px;">${item.name}</td>
                     <td style="border: 1px solid #d1d5db; padding: 8px; text-align: right;">${formatRupiah(item.amount)}</td>
@@ -63,7 +65,7 @@ export default function SplitResult({ event, splitData, onShare }) {
                     <td style="border: 1px solid #d1d5db; padding: 8px;">${participants.join(', ')}</td>
                   </tr>
                 `;
-              }).join('')}
+      }).join('')}
             </tbody>
           </table>
         </div>
@@ -90,11 +92,11 @@ export default function SplitResult({ event, splitData, onShare }) {
           <h2 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 5px;">Saldo Akhir</h2>
           <div style="margin-top: 15px;">
             ${event.members.map(member => {
-              const balance = splitData?.balances[member.id] || 0;
-              const balanceColor = balance > 0 ? '#059669' : balance < 0 ? '#dc2626' : '#6b7280';
-              const balanceText = balance > 0 ? 'Akan menerima' : balance < 0 ? 'Harus membayar' : 'Lunas';
-              
-              return `
+        const balance = splitData?.balances[member.id] || 0;
+        const balanceColor = balance > 0 ? '#059669' : balance < 0 ? '#dc2626' : '#6b7280';
+        const balanceText = balance > 0 ? 'Akan menerima' : balance < 0 ? 'Harus membayar' : 'Lunas';
+
+        return `
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #e5e7eb;">
                   <span style="font-weight: bold;">${member.name}</span>
                   <div style="text-align: right;">
@@ -107,33 +109,33 @@ export default function SplitResult({ event, splitData, onShare }) {
                   </div>
                 </div>
               `;
-            }).join('')}
+      }).join('')}
           </div>
         </div>
       `;
-      
+
       // Tambahkan ke DOM sementara
       document.body.appendChild(element);
-      
+
       // Konversi ke canvas
       const canvas = await html2canvas.default(element, {
         backgroundColor: 'white',
         scale: 2
       });
-      
+
       // Hapus dari DOM
       document.body.removeChild(element);
-      
+
       // Buat PDF
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgData = canvas.toDataURL('image/png');
-      
+
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
+
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`split-bill-${event.name.replace(/[^a-zA-Z0-9]/g, '-')}.pdf`);
-      
+
       Swal.fire({
         title: 'Berhasil!',
         text: 'PDF berhasil diunduh!',
@@ -141,7 +143,7 @@ export default function SplitResult({ event, splitData, onShare }) {
         background: '#1e293b',
         color: '#fff'
       });
-      
+
     } catch (error) {
       console.error('Error generating PDF:', error);
       Swal.fire({
@@ -223,7 +225,7 @@ export default function SplitResult({ event, splitData, onShare }) {
             const balance = splitData.balances[member.id];
             const balanceColor = balance > 0 ? 'text-green-400' : balance < 0 ? 'text-red-400' : 'text-slate-400';
             const balanceText = balance > 0 ? 'Akan menerima' : balance < 0 ? 'Harus membayar' : 'Lunas';
-            
+
             return (
               <div key={member.id} className="flex justify-between items-center p-3 bg-slate-700 rounded-lg">
                 <div>

@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id">
       <head>
-        {/* <script 
+        {/* <script
           src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.12/sweetalert2.min.js"
           strategy="beforeInteractive"
         /> */}

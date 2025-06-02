@@ -4,6 +4,8 @@ import { getEvents, deleteEvent } from '@/utils/localStorage';
 import EventForm from '@/components/EventForm';
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
+import Swal from 'sweetalert2'
+
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -35,7 +37,7 @@ export default function HomePage() {
     if (result.isConfirmed) {
       deleteEvent(eventId);
       setEvents(getEvents());
-      
+
       Swal.fire({
         title: 'Terhapus!',
         text: 'Event berhasil dihapus.',
@@ -49,7 +51,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-900">
       <Navigation />
-      
+
       <div className="container mx-auto p-4 max-w-md">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Events Anda</h1>
@@ -90,18 +92,18 @@ export default function HomePage() {
                     Hapus
                   </button>
                 </div>
-                
+
                 <p className="text-slate-400 text-sm mb-3">
                   Dibuat: {new Date(event.createdAt).toLocaleDateString('id-ID')}
                 </p>
-                
+
                 <div className="flex justify-between items-center">
                   <div className="text-sm text-slate-300">
                     <span className="block">Anggota: {event.members?.length || 0}</span>
                     <span className="block">Items: {event.items?.length || 0}</span>
                   </div>
-                  
-                  <Link 
+
+                  <Link
                     href={`/event/${event.id}`}
                     className="btn-primary text-sm"
                   >
