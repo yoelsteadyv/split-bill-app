@@ -22,6 +22,13 @@ export default function RootLayout({ children }) {
         <div className="min-h-screen">
           {children}
         </div>
+        <footer className='bg-slate-800 border-t border-slate-700 p-2'>
+          <nav className="container mx-auto flex justify-center items-center">
+            <div className="text-center">
+              © {new Date().getFullYear()} Split Bill App | Build with 🌹 by • E L E N T
+            </div>
+          </nav>
+        </footer>
       </body>
     </html>
   )

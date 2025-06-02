@@ -244,7 +244,7 @@ export default function SplitResult({ event, splitData, onShare }) {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex space-x-3">
+      {/* <div className="flex space-x-3">
         <button
           onClick={onShare}
           className="btn-secondary flex-1"
@@ -257,7 +257,7 @@ export default function SplitResult({ event, splitData, onShare }) {
         >
           📄 Export PDF
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
