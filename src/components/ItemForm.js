@@ -159,7 +159,7 @@ export default function ItemForm({ members, onAddItem, items, onDeleteItem }) {
               Jumlah (Rp) *
             </label>
             <input
-              type="text"
+              type="number"
               value={amount}
               onChange={handleAmountChange}
               placeholder="0"
